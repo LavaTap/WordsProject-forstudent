@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/23297215/README.md)
+【flask项目展示】https://www.xiaohongshu.com/discovery/item/69085831000000000302f67f?source=webshare&xhsshare=pc_web&xsec_token=ABBwS18bb-cWX5ZmrWQdd8YBgroQQaE9YqDgR4eijrn3U=&xsec_source=pc_share # 社恐人！下辈子出个讲解视频吧
 # WordsProject 文档
 
 ---
