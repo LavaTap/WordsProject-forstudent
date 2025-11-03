@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}历史错词{% endblock %}
+
+{% block global_css %}{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='wrong_words.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if wrong_words %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">单词</th>
+                                    <th class="text-center">中文释义</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for word, infos in wrong_words.items() %}
+                                <tr>
+                                    <td class="font-weight-medium">{{ word }}</td>
+                                    <td>
+                                        {% for info in infos %}
+                                        {{ info.simplified }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-center text-muted py-5">暂无错词记录</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
+{% endblock %}

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>项目介绍页</title>
+
+    <!-- AOS 动画库 -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- FontAwesome 图标 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Helvetica Neue", sans-serif;
+            background: linear-gradient(to bottom right, #e0f7fa, #fce4ec);
+            color: #333;
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: url('/static/images/hero.jpg') center/cover no-repeat;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+        }
+
+        section {
+            padding: 80px 10%;
+            background: rgba(255, 255, 255, 0.85);
+            margin: 40px auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .media {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .media img,
+        .media video {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            background: #f5f5f5;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部 -->
+    <header>
+        <h1 data-aos="fade-down">欢迎来到词汇学习平台</h1>
+        <p data-aos="fade-up">智能错题追踪 · 动态报表 · AI智能分析 · 零配置部署</p>
+    </header>
+
+    <!-- 项目简介 -->
+    <section data-aos="fade-up">
+        <h2 class="section-title">项目简介</h2>
+        <p>
+            本平台专为学生设计，提供词汇测试、错题归档、学习数据可视化等功能。
+            通过模块化架构与极简部署方式，快速落地教学场景。
+        </p>
+        <!-- <div class="media">
+            <img src="/static/images/overview.png" alt="项目概览图" />
+            <video src="/static/videos/demo.mp4" controls></video>
+        </div> -->
+    </section>
+
+    <!-- 核心创新点 -->
+    <section data-aos="fade-up">
+        <h2 class="section-title">核心创新点</h2>
+        <ul>
+            <li><i class="fa-solid fa-bug"></i> 智能错题追踪：实时归档 + 正误分析</li>
+            <li><i class="fa-solid fa-chart-line"></i> 动态可视化报表：周/月维度自定义标签</li>
+            <li><i class="fa-solid fa-plug"></i> AI智能分析：读取用户信息准确帮助</li>
+            <li><i class="fa-solid fa-plug"></i> 插件化设计：词表可插拔，前后端分离</li>
+            <li><i class="fa-solid fa-rocket"></i> 零配置部署：SQLite + 初始化脚本</li>
+        </ul>
+    </section>
+    <section class="section" data-aos="fade-up">
+    <h2 class="section-title">技术架构</h2>
+
+    <h3 data-aos="fade-right">后端架构</h3>
+    <ul data-aos="fade-right" data-aos-delay="100">
+        <li><strong>框架</strong>: Python Flask框架构建</li>
+        <li><strong>数据库</strong>: SQLite数据库存储数据</li>
+        <li><strong>架构模式</strong>: 完整的MVC结构</li>
+    </ul>
+
+    <h3 data-aos="fade-left">MVC分层设计</h3>
+    <ul data-aos="fade-left" data-aos-delay="100">
+        <li><strong>模型层</strong>: 定义Student/QuizRecord等数据模型</li>
+        <li><strong>视图层</strong>: 多个路由处理函数</li>
+        <li><strong>控制层</strong>: 业务逻辑处理</li>
+    </ul>
+
+    <h3 data-aos="fade-right">主要功能模块</h3>
+    <ul data-aos="fade-right" data-aos-delay="100">
+        <li><strong>用户系统</strong>: 登录/注册功能（含密码哈希加密）、会话管理（session机制）、邮箱验证功能（SMTP配置）</li>
+        <li><strong>学习模式</strong>: 自定义单词模式、四级/六级专项模式、随机题目生成功能</li>
+        <li><strong>数据管理</strong>: 错题本功能（记录错题及解析）、学习统计（UserStats模型）、单词管理（CustomWord/WrongWord模型）</li>
+    </ul>
+
+    <h3 data-aos="fade-left">技术亮点</h3>
+    <ul data-aos="fade-left" data-aos-delay="100">
+        <li><strong>前端特性</strong>: 响应式布局设计、日间/夜间主题切换、加载动画效果、使用Tailwind CSS框架</li>
+        <li><strong>后端特性</strong>: 数据库迁移管理、路由拦截器（登录验证）、缓存控制头设置、配置文件分离</li>
+        <li><strong>插件化设计</strong>: 词表可插拔，前端可配置</li>
+        <li><strong>零配置部署</strong>: SQLite数据库 + 初始化脚本</li>
+        <li><strong>零配置部署</strong>: AI api 接入读取数据 智能分析</li>
+    </ul>
+
+    <h3 data-aos="fade-right">代码结构</h3>
+    <ul data-aos="fade-right" data-aos-delay="100">
+        <li><strong>主程序(app.py)</strong>: Flask应用初始化、数据库配置、路由定义、工具函数</li>
+        <li><strong>前端资源</strong>: HTML模板系统、CSS自定义样式、JavaScript交互逻辑</li>
+        <li><strong>数据库模型</strong>: 定义数据模型（Student/QuizRecord等）</li>
+        <li><strong>工具函数</strong>: 数据库操作、用户认证、数据处理等</li>
+    </ul>
+
+    <h3 data-aos="fade-left">扩展接口</h3>
+    <ul data-aos="fade-left" data-aos-delay="100">
+        <li><strong>AI服务集成</strong>: deepseek,豆包AI等</li>
+        <li><strong>API配置</strong>: 未来展望火山方舟模型API、预留其他API接入点</li>
+    </ul>
+
+    <p data-aos="fade-up" data-aos-delay="200">
+        该应用是一个功能完整的英语词汇学习系统，适合个人使用或教学场景，具有良好扩展性和现代化UI体验。
+    </p>
+</section>
+
+
+    <!-- 媒体插槽（可复用） -->
+    <section data-aos="fade-up">
+        <h2 class="section-title">更多展示</h2>
+        <!-- <div class="media">
+            <img src="/static/images/chart.png" alt="统计图" />
+            <video src="/static/videos/interaction.mp4" controls></video>
+        </div> -->
+    </section>
+
+    <!-- AOS 动画脚本 -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: false, duration: 800 });
+    </script>
+</body>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+<!-- FontAwesome 图标 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+<style>
+    /* 通用版式 */
+    .section {
+        padding: 80px 10%;
+        margin-bottom: 60px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+    }
+
+    .section h2 {
+        margin-bottom: 24px;
+        font-size: 2rem;
+        color: #333;
+        position: relative;
+    }
+
+    /* 第5页：创新点图标网格 */
+    .innovations {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 32px;
+    }
+
+    .innovation-item {
+        text-align: center;
+    }
+
+    .innovation-item i {
+        font-size: 2.5rem;
+        color: #3498db;
+        margin-bottom: 12px;
+    }
+
+    .innovation-item h3 {
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+    }
+
+    .innovation-item ul {
+        text-align: left;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .innovation-item li {
+        margin-bottom: 4px;
+        position: relative;
+        padding-left: 16px;
+    }
+
+    .innovation-item li:before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #3498db;
+    }
+
+    /* 第5页：对比表格 */
+    .compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 32px;
+    }
+
+    .compare-table th,
+    .compare-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .compare-table th {
+        background: #f0f0f0;
+    }
+
+    /* 第6页：时间轴 */
+    .timeline {
+        position: relative;
+        margin: 40px 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .timeline li {
+        position: relative;
+        padding: 20px 0 20px 40px;
+        margin-bottom: 20px;
+    }
+
+    .timeline li:before {
+        content: "";
+        position: absolute;
+        left: 18px;
+        top: 24px;
+        width: 10px;
+        height: 10px;
+        background: #3498db;
+        border-radius: 50%;
+    }
+
+    .timeline li:after {
+        content: "";
+        position: absolute;
+        left: 22px;
+        top: 34px;
+        bottom: -10px;
+        width: 2px;
+        background: #ddd;
+    }
+
+    .timeline li:last-child:after {
+        display: none;
+    }
+
+    /* 第7页：ROI 表格 */
+    .value-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 24px;
+    }
+
+    .value-table th,
+    .value-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .value-table th {
+        background: #f9f9f9;
+    }
+</style>
+
+<section class="section" data-aos="fade-up">
+    <h2>核心创新点</h2>
+    <div class="innovations">
+        <div class="innovation-item" data-aos="zoom-in">
+            <i class="fa-solid fa-bug"></i>
+            <h3>智能错题追踪</h3>
+            <ul>
+                <li>实时归档错题</li>
+                <li>热词趋势分析</li>
+            </ul>
+        </div>
+        <div class="innovation-item" data-aos="zoom-in" data-aos-delay="100">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3>动态可视化报表</h3>
+            <ul>
+                <li>周／月维度自定义标签</li>
+                <li>折线，柱状统计图直观展示</li>
+            </ul>
+        </div>
+        <div class="innovation-item" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fa-solid fa-plug"></i>
+            <h3>模块化插件化</h3>
+            <ul>
+                <li>可插拔词表</li>
+                <li>前后端分离部署</li>
+            </ul>
+        </div>
+        <div class="innovation-item" data-aos="zoom-in" data-aos-delay="300">
+            <i class="fa-solid fa-rocket"></i>
+            <h3>极简零配置部署</h3>
+            <ul>
+                <li>SQLite 零运维</li>
+                <li>一键初始化脚本</li>
+            </ul>
+        </div>
+        <div class="innovation-item" data-aos="zoom-in" data-aos-delay="400">
+            <i class="fa-solid fa-eye"></i>
+            <h3>AI接入分析数据</h3>
+            <ul>
+                <li>轻便的AI api 接入接口</li>
+                <li>数据库错题表准确读取</li>
+                <li>为用户量身定制的分析助手</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 传统 vs 本项目 对比表 -->
+    <table class="compare-table" data-aos="fade-left">
+        <thead>
+            <tr>
+                <th>特性</th>
+                <th>传统方案</th>
+                <th>本项目</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>错题管理</td>
+                <td>人工整理，耗时</td>
+                <td>实时归档 + 错词分析</td>
+            </tr>
+            <tr>
+                <td>报表展示</td>
+                <td>静态Excel</td>
+                <td>动态可视化 & 自定义维度</td>
+            </tr>
+            <tr>
+                <td>系统扩展</td>
+                <td>高耦合，重构难</td>
+                <td>模块化插件化</td>
+            </tr>
+            <tr>
+                <td>部署成本</td>
+                <td>运维人员维护</td>
+                <td>SQLite + 一键脚本</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- 第6页：总结与未来展望 -->
+<section class="section" data-aos="fade-up">
+    <h2 class="section-title">总结与未来展望</h2>
+    <p>
+        下一阶段将接入在线词库 API，扩展至移动端 App，并引入 AI 智能推荐算法。
+        本项目将不仅仅局限于单词学习与统计，目标是成为一个多功能且智能的学习工具。
+    </p>
+    <h3 data-aos="fade-right">当前成果</h3>
+    <ul data-aos="fade-right" data-aos-delay="100">
+        <li>覆盖学习闭环与基础统计报表</li>
+        <li>部署简便，已在内测团队验证</li>
+    </ul>
+
+    <h3 data-aos="fade-left">后续规划</h3>
+    <ul data-aos="fade-left" data-aos-delay="100">
+        <li>拓展功能范围 不局限于单词复习</li>
+        <li>接入在线词库 API</li>
+        <li>开发移动端 App</li>
+        <li>引入 AI 推荐复习算法</li>
+        <li>提供更只能化学习服务</li>
+    </ul>
+
+    <h3 data-aos="fade-up">里程碑与时间表</h3>
+    <ul class="timeline" data-aos="fade-up" data-aos-delay="100">
+        <li>
+            <strong>Q4</strong> API 增强 & 移动端原型
+        </li>
+        <li>
+            <strong>Q1</strong> 上线商用版 & 数据监控
+        </li>
+    </ul>
+</section>
+
+<!-- 第7页：应用价值与商业前景 -->
+<section class="section" data-aos="fade-up">
+    <h2>应用价值与前景</h2>
+
+    <h3 data-aos="fade-right">用户价值</h3>
+    <ul data-aos="fade-right" data-aos-delay="100">
+        <li>个性化学习 提升记忆效率 30%+</li>
+        <li>数据驱动复习 降低遗忘率</li>
+    </ul>
+
+    <h3 data-aos="fade-left">机构价值</h3>
+    <ul data-aos="fade-left" data-aos-delay="100">
+        <li>平台化管理 降低时间成本</li>
+        <li>报表自动化 精准教学反馈</li>
+    </ul>
+
+    <h3 data-aos="fade-up">未来商业化模式</h3>
+    <table class="value-table" data-aos="fade-up" data-aos-delay="100">
+        <thead>
+            <tr>
+                <th>模式</th>
+                <th>详情</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>基础版</td>
+                <td>免费开放，覆盖核心功能</td>
+            </tr>
+            <tr>
+                <td>高级版订阅</td>
+                <td>高级报表、API 接入，各个数据读取分析等增值服务</td>
+            </tr>
+            <tr>
+                <td>多元化</td>
+                <td>未来实时读取用户编程事件与各门语言数据 采用多种统计图</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    &copy; 2025 词汇学习平台 · Powered by cqtbi云计算工作室 团队
+</footer>
+
+</html>

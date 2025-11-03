@@ -1,0 +1,57 @@
+/* 容器居中（已定义在全局，可选重写） */
+.center {
+    min-height: calc(100vh - 120px);
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+/* 彻底重写 file-selector 按钮 */
+.file-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+/* Chrome/Edge/Safari */
+.file-input::-webkit-file-upload-button {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* Firefox */
+.file-input::file-selector-button {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* 悬停在整个 input 上时，突出边框色 */
+.file-input:hover {
+    border-color: var(--primary-500);
+    background: rgba(250, 250, 255, 0.95);
+}
+
+/* 按钮按下反馈 */
+.file-input:active {
+    background: rgba(245, 245, 255, 0.9);
+}
+
+/* 上传按钮微调 */
+.btn-primary {
+    border-radius: var(--radius);
+    font-size: 1rem;
+    padding: 12px;
+}

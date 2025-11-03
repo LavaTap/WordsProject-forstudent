@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block title %}模式选择{% endblock %} {% block
+page_css %}
+<style>
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+    }
+
+    .modal.hidden {
+        display: none;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        width: 300px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+</style>
+{% endblock %} {% block content %}
+<div class="center">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2 class="title">选择答题模式</h2>
+            <p class="subtitle">请选择你要进行的练习类型</p>
+        </div>
+
+        <div class="form text-center">
+            <a href="{{ url_for('cet4_mode') }}" class="btn btn-primary">四级模式</a>
+            <a href="{{ url_for('cet6_mode') }}" class="btn btn-primary">六级模式</a>
+            <button class="btn btn-primary btn-block mt-4" onclick="showCustomModal()">
+                进入自定义模式
+            </button>
+            <a href="{{ url_for('welcome') }}" class="btn btn-ghost btn-block mt-4">返回首页</a>
+        </div>
+    </div>
+</div>
+
+<div id="customModal" class="modal hidden">
+    <div class="modal-content">
+        <h3>请选择操作</h3>
+        <a href="{{ url_for('upload_words') }}" class="btn btn-secondary btn-block mt-4">📤 上传新单词表</a>
+        <a href="{{ url_for('custom_mode') }}" class="btn btn-primary btn-block mt-4">▶ 直接开始答题</a>
+        <button onclick="hideCustomModal()" class="btn btn-ghost btn-block mt-4">
+            取消
+        </button>
+    </div>
+</div>
+
+<script>
+    function showCustomModal() {
+        document.getElementById("customModal").classList.remove("hidden");
+    }
+    function hideCustomModal() {
+        document.getElementById("customModal").classList.add("hidden");
+    }
+</script>
+{% endblock %}

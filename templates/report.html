@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}测试报告{% endblock %}
+
+{% block content %}
+<style>
+    /* 收缩面板样式 */
+    .collapse-header {
+        cursor: pointer;
+        padding: 0.75rem 1rem;
+        background: var(--primary-100);
+        border-radius: 4px;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .collapse-header:hover {
+        background: var(--primary-200);
+    }
+
+    .collapse-header .arrow {
+        transition: transform 0.3s;
+    }
+
+    .collapse-header.collapsed .arrow {
+        transform: rotate(-90deg);
+    }
+
+    .collapse-content {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--primary-100);
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        display: none;
+    }
+
+    .collapse-content.show {
+        display: block;
+    }
+
+    .word-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .word-list li {
+        padding: 0.25rem 0;
+        border-bottom: 1px dashed var(--primary-200);
+    }
+</style>
+
+<div class="center">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2 class="title">本次测试报告</h2>
+            <p class="subtitle">测试时间：{{ labels[0] if labels else '' }}</p>
+            <h3>得分：{{ last_score }}/{{ last_total }}（{{ last_percent }}%）</h3>
+        </div>
+
+        <div class="card-body">
+            <!-- 正确单词面板 -->
+            <div class="collapse-header" id="header-correct" onclick="togglePanel('correct')">
+                <span>正确的单词（{{ correct_questions|length }}）</span>
+                <span class="arrow">▾</span>
+            </div>
+            <div class="collapse-content" id="content-correct">
+                <ul class="word-list">
+                    {% for q in correct_questions %}
+                    <li>{{ q.question }} — {{ q.correct_answer }}</li>
+                    {% endfor %}
+                    {% if correct_questions|length == 0 %}
+                    <li>暂无正确单词</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- 错误单词面板 -->
+            <div class="collapse-header" id="header-wrong" onclick="togglePanel('wrong')">
+                <span>错误的单词（{{ wrong_questions|length }}）</span>
+                <span class="arrow">▾</span>
+            </div>
+            <div class="collapse-content" id="content-wrong">
+                <ul class="word-list">
+                    {% for q in wrong_questions %}
+                    <li>{{ q.question }} — {{ q.correct_answer }}</li>
+                    {% endfor %}
+                    {% if wrong_questions|length == 0 %}
+                    <li>恭喜，没有错题！</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- 返回按钮 -->
+            <div class="text-center" style="margin-top: 1.5rem;">
+                <a href="{{ url_for('mode_select') }}" class="btn btn-primary">返回模式选择</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePanel(type) {
+        const header = document.getElementById(`header-${type}`);
+        const content = document.getElementById(`content-${type}`);
+        const isShown = content.classList.toggle('show');
+        header.classList.toggle('collapsed', !isShown);
+    }
+</script>
+{% endblock %}

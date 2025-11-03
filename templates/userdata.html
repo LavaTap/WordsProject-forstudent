@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}用户数据{% endblock %}
+<style>
+    /* 自定义 Nav Tabs */
+    .nav-tabs {
+        border-bottom: none;
+    }
+
+    .nav-tabs .nav-link {
+        color: #555;
+        padding: 0.5rem 1rem;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+        margin-right: 0.5rem;
+        transition: all 0.2s;
+    }
+
+    .nav-tabs .nav-link:hover {
+        background-color: #f0f0f0;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: #fff;
+        background-color: #007bff;
+        /* 主色，随项目替换 */
+        border-color: #007bff #007bff transparent;
+    }
+</style>
+
+{% block content %}
+<div class="center">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2>📊 用户数据</h2>
+        </div>
+        <div class="card-body">
+            <p>总答题数：{{ total_words }}</p>
+            <p>整体正确率：{{ accuracy }}%</p>
+
+            <!-- 切换菜单 -->
+            <ul class="nav nav-tabs mt-4" id="periodTabs">
+                <li class="nav-item">
+<!--                    <a class="nav-link active" href="#" data-period="daily">每日</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-period="7">近 7 天</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#" data-period="30">近 30 天</a>-->
+                </li>
+            </ul>
+
+            <div class="mt-4">
+                <h4>每日答题数量</h4>
+                <canvas id="countChart" width="400" height="200"></canvas>
+            </div>
+            <div class="mt-5">
+                <h4>每日准确率 (%)</h4>
+                <canvas id="accChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 直接在 content 末尾加载 Chart.js + 初始化脚本 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const dataSets = {
+            daily: {
+                labels: {{ daily_labels     | default([]) | tojson }},
+                counts: {{ daily_counts     | default([]) | tojson }},
+                accs: {{ daily_accuracies | default([]) | tojson }}
+            },
+            7: {
+                labels: {{ weekly_labels     | default([]) | tojson }},
+                counts: {{ weekly_counts     | default([]) | tojson }},
+                accs: {{ weekly_accuracies | default([]) | tojson }}
+            },
+            30: {
+                labels: {{ monthly_labels     | default([]) | tojson }},
+                counts: {{ monthly_counts     | default([]) | tojson }},
+                accs: {{ monthly_accuracies | default([]) | tojson }}
+            }
+        };
+
+    const countCtx = document.getElementById("countChart").getContext("2d");
+    const countChart = new Chart(countCtx, {
+        type: "bar",
+        data: {
+            labels: [],
+            datasets: [{
+                label: "单词数量",
+                data: [],
+                backgroundColor: "rgba(75,192,192,0.6)"
+            }]
+        },
+        options: {
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    const accCtx = document.getElementById("accChart").getContext("2d");
+    const accChart = new Chart(accCtx, {
+        type: "line",
+        data: {
+            labels: [],
+            datasets: [{
+                label: "准确率 (%)",
+                data: [],
+                borderColor: "orange",
+                fill: false
+            }]
+        },
+        options: {
+            scales: { y: { beginAtZero: true, max: 1 } }
+        }
+    });
+
+    function render(period) {
+        const ds = dataSets[period];
+        if (!ds.labels.length) {
+            countChart.data.labels = [];
+            countChart.data.datasets[0].data = [];
+            accChart.data.labels = [];
+            accChart.data.datasets[0].data = [];
+        } else {
+            countChart.data.labels = ds.labels;
+            countChart.data.datasets[0].data = ds.counts;
+            accChart.data.labels = ds.labels;
+            accChart.data.datasets[0].data = ds.accs;
+        }
+        countChart.update();
+        accChart.update();
+    }
+
+    document.querySelectorAll("#periodTabs .nav-link").forEach(link => {
+        link.addEventListener("click", e => {
+            e.preventDefault();
+            document.querySelectorAll("#periodTabs .nav-link")
+                .forEach(a => a.classList.remove("active"));
+            link.classList.add("active");
+            render(link.dataset.period);
+        });
+    });
+
+    render(7); // 默认渲染近 7 天
+});
+</script>
+
+{% endblock %}

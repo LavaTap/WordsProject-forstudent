@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <div class="card mx-auto" style="max-width: 400px;">
+        <div class="card-body">
+            <h3 class="card-title">暂无测验记录</h3>
+            <p class="card-text">
+                看起来您还没有参加过任何当堂测验。<br>
+                可能是数据出现了问题。
+            </p>
+            <a href="{{ url_for('welcome') }}" class="btn btn-primary">
+                重新测验
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

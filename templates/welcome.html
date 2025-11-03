@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="center">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2 class="title">欢迎回来</h2>
+            <p class="subtitle">学号：{{ student_id }}</p>
+        </div>
+
+        <div class="form text-center">
+            <a href="{{ url_for('mode_select') }}" class="btn btn-primary btn-block mt-3">进入模式选择</a>
+            <a href="{{ url_for('userdata') }}" class="btn btn-primary btn-block mt-3">📊 用户数据</a>
+            <a href="{{ url_for('ai.ai_analysis') }}" class="btn btn-primary btn-block mt-3">📊 AI分析数据</a>
+            <a href="{{ url_for('wrong_words') }}" class="btn btn-primary btn-block mt-3">❌ 历史错词</a>
+            <a href="{{ url_for('auth.change_password') }}" class="btn btn-primary btn-block mt-3">更改密码</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-danger btn-block mt-4">退出登录</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

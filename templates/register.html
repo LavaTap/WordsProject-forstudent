@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="center">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2 class="title">注册</h2>
+            <p class="subtitle">创建你的账号</p>
+        </div>
+
+        <div class="flash-container mt-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+
+
+        <form method="post" class="form">
+            <div class="form-row">
+                <label class="label">学号</label>
+                <input type="text" name="student_id" class="input" required>
+            </div>
+            <div class="form-row">
+                <label class="label">性别</label>
+                <select name="sex" class="input" required>
+                    <option value="">请选择性别</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            <div class="form-row">
+                <label class="label">学校</label>
+                <select name="school" class="input" required>
+                    <option value="长江师范学院">长江师范学院</option>
+                    <option value="四川外国语大学">四川外国语大学</option>
+                    <option value="四川美术学院">四川美术学院</option>
+                    <option value="西南大学">西南大学</option>
+                    <option value="西南政法大学">西南政法大学</option>
+                    <option value="重庆安防职业学院">重庆安防职业学院</option>
+                    <option value="重庆安全技术职业学院">重庆安全技术职业学院</option>
+                    <option value="重庆财经学院">重庆财经学院</option>
+                    <option value="重庆财经职业学院">重庆财经职业学院</option>
+                    <option value="重庆城市管理职业学院">重庆城市管理职业学院</option>
+                    <option value="重庆城市科技学院">重庆城市科技学院</option>
+                    <option value="重庆城市职业学院">重庆城市职业学院</option>
+                    <option value="重庆大学">重庆大学</option>
+                    <option value="重庆电力高等专科学校">重庆电力高等专科学校</option>
+                    <option value="重庆电信职业学院">重庆电信职业学院</option>
+                    <option value="重庆电讯职业学院">重庆电讯职业学院</option>
+                    <option value="重庆电子科技职业大学">重庆电子科技职业大学</option>
+                    <option value="重庆对外经贸学院">重庆对外经贸学院</option>
+                    <option value="重庆工程学院">重庆工程学院</option>
+                    <option value="重庆工程职业技术学院">重庆工程职业技术学院</option>
+                    <option value="重庆工贸职业技术学院">重庆工贸职业技术学院</option>
+                    <option value="重庆工信职业学院">重庆工信职业学院</option>
+                    <option value="重庆工商大学">重庆工商大学</option>
+                    <option value="重庆工商大学派斯学院">重庆工商大学派斯学院</option>
+                    <option value="重庆工商职业学院">重庆工商职业学院</option>
+                    <option value="重庆工业职业技术大学">重庆工业职业技术大学</option>
+                    <option value="重庆护理职业学院">重庆护理职业学院</option>
+                    <option value="重庆化工职业学院">重庆化工职业学院</option>
+                    <option value="重庆机电职业技术大学">重庆机电职业技术大学</option>
+                    <option value="重庆建筑工程职业学院">重庆建筑工程职业学院</option>
+                    <option value="重庆建筑科技职业学院">重庆建筑科技职业学院</option>
+                    <option value="重庆交通大学">重庆交通大学</option>
+                    <option value="重庆交通职业学院">重庆交通职业学院</option>
+                    <option value="重庆警察学院">重庆警察学院</option>
+                    <option value="重庆科创职业学院">重庆科创职业学院</option>
+                    <option value="重庆科技大学">重庆科技大学</option>
+                    <option value="重庆科技职业学院">重庆科技职业学院</option>
+                    <option value="重庆理工大学">重庆理工大学</option>
+                    <option value="重庆理工职业学院">重庆理工职业学院</option>
+                    <option value="重庆旅游职业学院">重庆旅游职业学院</option>
+                    <option value="重庆美术学院">重庆美术学院</option>
+                    <option value="重庆农业职业学院">重庆农业职业学院</option>
+                    <option value="重庆能源职业学院">重庆能源职业学院</option>
+                    <option value="重庆人文科技学院">重庆人文科技学院</option>
+                    <option value="重庆三峡学院">重庆三峡学院</option>
+                    <option value="重庆三峡医药高等专科学校">重庆三峡医药高等专科学校</option>
+                    <option value="重庆三峡职业学院">重庆三峡职业学院</option>
+                    <option value="重庆商务职业学院">重庆商务职业学院</option>
+                    <option value="重庆师范大学">重庆师范大学</option>
+                    <option value="重庆水利电力职业技术学院">重庆水利电力职业技术学院</option>
+                    <option value="重庆数字产业职业技术学院">重庆数字产业职业技术学院</option>
+                    <option value="重庆文理学院">重庆文理学院</option>
+                    <option value="重庆五一职业技术学院">重庆五一职业技术学院</option>
+                    <option value="重庆现代制造职业学院">重庆现代制造职业学院</option>
+                    <option value="重庆信息技术职业学院">重庆信息技术职业学院</option>
+                    <option value="重庆移通学院">重庆移通学院</option>
+                    <option value="重庆医科大学">重庆医科大学</option>
+                    <option value="重庆医药高等专科学校">重庆医药高等专科学校</option>
+                    <option value="重庆艺术工程职业学院">重庆艺术工程职业学院</option>
+                    <option value="重庆应用技术职业学院">重庆应用技术职业学院</option>
+                    <option value="重庆幼儿师范高等专科学校">重庆幼儿师范高等专科学校</option>
+                    <option value="重庆邮电大学">重庆邮电大学</option>
+                    <option value="重庆有色金属职业技术学院">重庆有色金属职业技术学院</option>
+                    <option value="重庆中医药学院">重庆中医药学院</option>
+                    <option value="重庆智能工程职业学院">重庆智能工程职业学院</option>
+                    <option value="重庆资源与环境保护职业学院">重庆资源与环境保护职业学院</option>
+                    <option value="重庆青年职业技术学院">重庆青年职业技术学院</option>
+                    <option value="重庆轻工职业学院">重庆轻工职业学院</option>
+                    <option value="重庆文化艺术职业学院">重庆文化艺术职业学院</option>
+                    <option value="重庆外语外事学院">重庆外语外事学院</option>
+                    <option value="重庆海联职业技术学院">重庆海联职业技术学院</option>
+                    <option value="重庆健康职业学院">重庆健康职业学院</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label class="label">手机号</label>
+                <input type="text" name="phone" class="input" maxlength="11" required>
+            </div>
+            <div class="form-row">
+                <label class="label">验证码</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" name="code" class="input" maxlength="6" required>
+                    <button type="button" class="btn btn-secondary" onclick="sendCode()">获取验证码</button>
+                </div>
+                <div class="form-row">
+                    <label class="label">邮箱</label>
+                    <input type="email" name="email" class="input" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <label class="label">密码</label>
+                <input type="password" name="password" class="input" required>
+            </div>
+            <div class="form-row">
+                <label class="label">确认密码</label>
+                <input type="password" name="confirm_password" class="input" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">注册</button>
+        </form>
+
+        <div class="divider mt-4"></div>
+        <p class="text-center mt-2">
+            已有账号？
+            <a href="{{ url_for('auth.login') }}">登录</a>
+        </p>
+    </div>
+    <script>
+        function sendCode() {
+            const studentId = document.querySelector('input[name="student_id"]').value;
+            const phone = document.querySelector('input[name="phone"]').value;
+            const email = document.querySelector('input[name="email"]').value;
+
+            if (!/^1\d{10}$/.test(phone)) {
+                alert("请输入有效的手机号");
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert("请输入有效的邮箱地址");
+                return;
+            }
+
+            fetch("/auth/send_register_code", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    student_id: studentId,
+                    phone: phone,
+                    email: email
+                })
+            }).then(response => {
+                if (response.ok) {
+                    alert("验证码已发送，请查收短信或邮件");
+                } else {
+                    alert("验证码发送失败，请稍后重试");
+                }
+            });
+        }
+    </script>
+</div>
+{% endblock %}

@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}自定义模式{% endblock %}
+{% block content %}
+<div class="center">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2 class="title">自定义模式</h2>
+            <p class="subtitle">选择题目数量并开始答题</p>
+        </div>
+
+        <div class="form text-center">
+            <label class="label">选择题目数量：</label>
+            <select id="numQuestions" class="input mt-2">
+                <option value="10">10题</option>
+                <option value="20">20题</option>
+                <option value="30">30题</option>
+                <option value="40">40题</option>
+            </select>
+            <button onclick="startQuiz()" class="btn btn-primary btn-block mt-4">开始答题</button>
+            <a href="{{ url_for('index') }}" class="btn btn-ghost btn-block mt-4">返回首页</a>
+        </div>
+
+        <!-- 进度条 -->
+        <div id="progressContainer" class="mt-6 hidden">
+            <div class="progress-bar-bg">
+                <div id="progressBar" class="progress-bar-fill"></div>
+            </div>
+            <p id="progressText" class="text-center mt-2"></p>
+        </div>
+
+        <!-- 答题区 -->
+        <div id="quiz" class="mt-6 hidden">
+            <div id="questionBox" class="mb-4"></div>
+            <div id="optionsBox" class="form"></div>
+            <button onclick="nextQuestion()" class="btn btn-secondary btn-block mt-4">下一题</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 进度条样式 */
+    .progress-bar-bg {
+        width: 100%;
+        height: 10px;
+        background-color: var(--color-neutral-200);
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        width: 0%;
+        background-color: var(--color-primary);
+        transition: width 0.3s ease;
+    }
+
+    /* 移动端优化 */
+    @media (max-width: 600px) {
+        .card {
+            padding: 1rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+
+        .title {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<script>
+    let answered = false;
+    let questions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let details = []; // 新增：存储每道题的答题详情
+    
+
+    function startQuiz() {
+            let num = document.getElementById("numQuestions").value;
+            fetch("/get_questions", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ num: num })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    questions = data;
+                    currentIndex = 0;
+                    score = 0;
+                    details = [];
+
+                    // 隐藏选择区域
+                    document.querySelector(".form").classList.add("hidden");
+
+                    // 显示答题区和进度条
+                    document.getElementById("quiz").classList.remove("hidden");
+                    document.getElementById("progressContainer").classList.remove("hidden");
+
+                    updateProgress();
+                    showQuestion();
+                });
+        }
+
+
+    function showQuestion() {
+        answered = false; // 每次显示新题时重置
+        let q = questions[currentIndex];
+        document.getElementById("questionBox").innerHTML = `<h2>${currentIndex + 1}. ${q.question}</h2>`;
+        let optionsHTML = "";
+        q.options.forEach(opt => {
+            optionsHTML += `<button class="btn btn-ghost btn-block mt-2" onclick="checkAnswer('${opt}')">${opt}</button>`;
+        });
+        document.getElementById("optionsBox").innerHTML = optionsHTML;
+    }
+
+    function checkAnswer(selected) {
+        if (answered) return; // 防止重复点击
+        answered = true;
+
+        let q = questions[currentIndex];
+
+        // 记录答题详情
+        details.push({
+            question: q.question,
+            options: q.options,
+            correct_answer: q.answer,
+            user_answer: selected
+        });
+
+        // 高亮正确答案
+        let options = document.querySelectorAll("#optionsBox button");
+
+        if (selected === q.answer) {
+            score++;
+        }
+        nextQuestion();
+    }
+
+    fetch("/save_score", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: "{{ student_id }}", // 从 session 获取
+                score: score,
+                mode: "custom",
+                total: questions.length,
+                details: details
+            })
+        })
+
+    function nextQuestion() {
+        if (!answered) {
+            alert("请先选择一个选项再进入下一题！");
+            return;
+        }
+
+        currentIndex++;
+        if (currentIndex < questions.length) {
+            updateProgress();
+            showQuestion();
+        } else {
+            updateProgress();
+            fetch("/save_score", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: "test_user",
+                    score: score,
+                    mode: "custom",
+                    total: questions.length,
+                    details: details // 传给后端
+                })
+            }).then(() => {
+                window.location.href = "/report";
+            });
+        }
+    }
+
+    function updateProgress() {
+        let percent = ((currentIndex) / questions.length) * 100;
+        document.getElementById("progressBar").style.width = percent + "%";
+        document.getElementById("progressText").innerText = `进度：${currentIndex}/${questions.length}`;
+    }
+</script>
+
+{% endblock %}

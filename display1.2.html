@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>WordsProject 文档</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Mermaid 图表 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+
+    <!-- Inter 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* 全局字体 & 背景流动渐变 */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            background: #0f172a;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #1e3a8a, #0f172a, #111827);
+            background-size: 400% 400%;
+            animation: gradientFlow 30s ease infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* 页面淡入 */
+        body.opacity-0 {
+            opacity: 0;
+        }
+
+        body.transition-opacity {
+            transition: opacity 0.7s ease;
+        }
+
+        /* 交叉出现动画 */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 下拉菜单出现动画 */
+        @keyframes dropdownShow {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-show {
+            animation: dropdownShow 0.3s ease-out forwards;
+        }
+
+        /* 窗口弹入动画 */
+        @keyframes windowPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .window-animate {
+            animation: windowPop 0.6s ease-out forwards;
+        }
+
+        /* 下滑入场 */
+        @keyframes slideDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-down {
+            animation: slideDown 0.6s ease-out forwards;
+        }
+
+        /* 卡片 Hover 弹跳 */
+        .card-hover:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* 导航下划线 */
+        .nav-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            height: 2px;
+            width: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Mermaid Hover 放大 */
+        .mermaid:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="opacity-0 transition-opacity antialiased">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 页面淡入
+            document.body.classList.remove('opacity-0');
+
+            // 交叉出现动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50">
+        <div
+            class="max-w-screen-xl mx-auto px-6 py-4 flex justify-between items-center bg-black/30 backdrop-blur-lg window-animate card-hover">
+            <a href="#hero" class="text-2xl font-bold">WordsProject</a>
+
+            <!-- Desktop Nav -->
+            <nav id="nav-menu" class="hidden md:flex space-x-6 text-white text-sm">
+                <a href="#notice" class="nav-link">注意事项</a>
+                <a href="#quickstart" class="nav-link">快速开始</a>
+                <a href="#data-flow" class="nav-link">核心数据流</a>
+                <a href="#features" class="nav-link">主要功能</a>
+                <a href="#structure" class="nav-link">目录结构</a>
+                <a href="#changelog" class="nav-link">更新日志</a>
+            </nav>
+
+            <!-- Mobile Toggle -->
+            <button id="menu-btn" class="md:hidden text-white text-2xl focus:outline-none">
+                &#9776;
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-black/80 backdrop-blur-lg md:hidden">
+            <ul class="flex flex-col p-4 space-y-2 text-white">
+                <li><a href="#notice" class="block py-2 px-4 hover:bg-indigo-600 rounded nav-link">注意事项</a></li>
+                <li><a href="#quickstart" class="block py-2 px-4 hover:bg-indigo-600 rounded nav-link">快速开始</a></li>
+                <li><a href="#data-flow" class="block py-2 px-4 hover:bg-indigo-600 rounded nav-link">核心数据流</a></li>
+                <li><a href="#features" class="block py-2 px-4 hover:bg-indigo-600 rounded nav-link">主要功能</a></li>
+                <li><a href="#structure" class="block py-2 px-4 hover:bg-indigo-600 rounded nav-link">目录结构</a></li>
+                <li><a href="#changelog" class="block py-2 px-4 hover:bg-indigo-600 rounded nav-link">更新日志</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-28 space-y-16 px-6">
+        <!-- Hero Section -->
+        <section id="hero" class="fade-in-up slide-down">
+            <div
+                class="max-w-screen-lg mx-auto p-12 bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl window-animate card-hover">
+                <h1 class="text-5xl font-extrabold mb-4">WordsProject 平台文档</h1>
+                <p class="text-lg text-gray-200 mb-6">高效词汇学习与错题管理的全流程解决方案</p>
+                <img src="https://via.placeholder.com/900x360?text=static/wspj.png" alt="WordsProject 示意"
+                    class="w-full rounded-2xl shadow-lg" />
+            </div>
+        </section>
+
+        <!-- Notice Section -->
+        <section id="notice" class="fade-in-up slide-down">
+            <div
+                class="max-w-screen-lg mx-auto p-8 bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl window-animate card-hover">
+                <h2 class="text-2xl font-semibold mb-4">🧠 注意事项</h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-200">
+                    <li>电脑必须安装 Docker（Desktop 或 CLI）。</li>
+                    <li>本站仅记录 20 届后学号注册信息。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section id="quickstart" class="fade-in-up slide-down">
+            <div
+                class="max-w-screen-lg mx-auto p-8 bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl window-animate card-hover">
+                <h2 class="text-2xl font-semibold mb-6">🚀 快速开始</h2>
+                <div class="space-y-6 text-gray-200">
+                    <div>
+                        <h3 class="text-xl font-medium mb-2">使用 Docker 镜像 <code>wordsproject6.2.tar</code></h3>
+                        <pre class="bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm text-sm overflow-auto">
+docker load -i wordsproject6.2.tar
+            </pre>
+                        <pre class="bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm text-sm overflow-auto">
+docker run -d -p 5000:5000 --name wordsproject6.2 wordsproject6.2
+            </pre>
+                        <pre class="bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm text-sm overflow-auto">
+docker-compose up --build
+            </pre>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-medium mb-2">源码模式</h3>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li><code>.\venv\Scripts\activate</code></li>
+                            <li><code>pip install -r requirements.txt</code></li>
+                            <li><code>python db_init.py</code></li>
+                            <li><code>python -m flask run</code></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Data Flow Section -->
+        <section id="data-flow" class="fade-in-up slide-down">
+            <div
+                class="max-w-screen-lg mx-auto p-8 bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl window-animate card-hover">
+                <h2 class="text-2xl font-semibold mb-4">📌 核心数据流</h2>
+                <div class="mermaid max-w-3xl mx-auto">
+                    graph LR
+                    A[用户注册登录] --> B{上传词表并加载}
+                    B --> C[选择单词数量 / 错词自动存入]
+                    C --> D[生成测验报告]
+                    D --> E[更新每日学习数据 & user_stats]
+                    E --> F[查看学习报告]
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="fade-in-up slide-down">
+            <div
+                class="max-w-screen-lg mx-auto p-8 bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl window-animate card-hover">
+                <h2 class="text-2xl font-semibold mb-4">🎯 主要功能</h2>
+                <ul class="list-disc list-inside space-y-4 text-gray-200">
+                    <li><strong>用户注册</strong>：提交学号/密码 → 验证 → 写入 <code>students</code> 表（7 位数字，前 4 位 ≤ 2026）</li>
+                    <li><strong>学习流程</strong>：登录 → 上传自定义词表 → 词表加载 → 答题 → 错词归档</li>
+                    <li><strong>数据统计</strong>：实时更新 <code>user_stats</code>，定时生成周/月报表</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Directory Structure Section -->
+        <section id="structure" class="fade-in-up slide-down">
+            <div
+                class="max-w-screen-lg mx-auto p-8 bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl window-animate card-hover">
+                <h2 class="text-2xl font-semibold mb-4">📂 目录结构</h2>
+                <pre class="bg-gray-800/50 p-4 rounded-lg backdrop-blur-sm text-sm overflow-auto">
+D:\code\Programms\wordsproject
+├── Dockerfile # 容器化部署配置
+├── README.MD # 项目说明文档（含核心架构说明）
+├── app.py # Flask主应用入口
+├── data/ # 核心数据存储
+│ ├── cedict_ts.u8.txt # 汉英词典原始数据
+│ ├── users.db # SQLite用户数据库
+│ └── word_lists/ # 用户词表存储（含匹配/未匹配分类）
+├── public/ # 静态资源
+│ └── css/loading.css # 加载动画样式
+├── static/ # 前端静态文件
+│ ├── style.css # 全局样式
+│ └── images/ # 图标资源
+├── templates/ # Jinja2模板
+│ ├── base.html # 基础模板（含全局CSS/JS引用）
+│ └── mode_select.html # 学习模式选择界面（含模态框组件）
+├── utils/ # 工具模块
+│ ├── security.py # 密码加密验证模块
+│ └── stats_utils.py # 学习数据统计模块
+└── wordsproject/venv # Python虚拟环境（仅显示根目录）
+        </pre>
+            </div>
+        </section>
+
+        <!-- Changelog Section -->
+        <section id="changelog" class="fade-in-up slide-down">
+            <div
+                class="max-w-screen-lg mx-auto p-8 bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl window-animate card-hover">
+                <h2 class="text-2xl font-semibold mb-4">📝 更新日志</h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-200">
+                    <li>2025-08-24：初始版本，支持用户注册、词表上传、学习流程</li>
+                    <li>2025-08-25：添加登录拦截，支持词表加载</li>
+                    <li>2025-08-26：新增邮箱/手机号绑定，支持 Docker 打包</li>
+                    <li>2025-08-27：修复登录拦截与注册流程</li>
+                    <li>2025-08-28：优化 UI 美化，添加加载动画</li>
+                    <li>2025-08-29：加入滑入、弹跳动画及加密逻辑，更新展示页</li>
+                    <li>2025-08-30：添加词表匹配逻辑，优化自定义流程精确度</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-gray-400">
+        &copy; 2025 WordsProject. 保留所有权利
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('dropdown-show');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>

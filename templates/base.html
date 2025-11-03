@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}词汇刻意练习{% endblock %}</title>
+
+  {% block global_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  {% endblock %}
+  {% block page_css %}{% endblock %}
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* 导航链接下划线动画 */
+    .nav-link {
+      position: relative;
+      color: var(--text);
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      height: 2px;
+      width: 0;
+      background-color: var(--primary-500);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-500);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* 全局加载遮罩 */
+    #loadingOverlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.9);
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    #loadingOverlay.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    html[data-theme="dark"] #loadingOverlay {
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    /* 红蓝双色转圈 */
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid transparent;
+      border-top-color: #e74c3c;
+      border-right-color: #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* 主题切换按钮 */
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid rgba(99, 102, 241, 0.12);
+      box-shadow: var(--shadow-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease;
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 text-slate-800">
+
+
+  <!-- 顶部导航 & 入口动画 -->
+  <header id="site-header" class="bg-white dark:bg-gray-900 shadow-md
+                 opacity-0 -translate-y-8 transform
+                 transition-all duration-700 ease-out">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+      <!-- Logo + 项目名 -->
+      <a href="{{ url_for('welcome') }}" class="flex items-center space-x-3">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Project Logo"
+          class="h-10 w-auto transition-transform duration-500 hover:scale-110 hover:rotate-3">
+        <span class="text-2xl font-semibold text-gray-800 dark:text-white">EDWordsProject</span>
+      </a>
+        <!-- 主题切换按钮 -->
+    <button id="themeToggle" class="theme-toggle px-4 py-2 rounded-full
+                  text-white bg-gradient-to-r from-purple-600 to-indigo-600
+                  shadow-lg shadow-indigo-500/40
+                  border border-indigo-300
+                  hover:scale-105 hover:shadow-xl
+                  transition-all duration-300
+                  dark:from-indigo-500 dark:to-purple-700 dark:shadow-purple-500/40">
+      切换主题
+    </button>
+
+
+      <!-- 主要导航 -->
+      <nav class="flex items-center space-x-8">
+  <a href="javascript:history.back()" class="nav-link">返回</a>
+  <a href="{{ url_for('welcome') }}"   class="nav-link">首页</a>
+  <a href="{{ url_for('about') }}"     class="nav-link">关于项目</a>
+  <a href="{{ url_for('userdata') }}"  class="nav-link">用户数据</a>
+</nav>
+
+  </header>
+
+  <!-- 主体内容 -->
+  <main class="max-w-5xl mx-auto p-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% if tip %}
+  <footer class="max-w-5xl mx-auto p-4 text-sm text-slate-500">{{ tip }}</footer>
+  {% endif %}
+
+  <!-- 加载遮罩 -->
+  <div id="loadingOverlay">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    // 主题切换初始化 & 持久化
+    ; (function () {
+      const KEY = 'theme';
+      const saved = localStorage.getItem(KEY);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const current = saved || (prefersDark ? 'dark' : 'light');
+
+      document.documentElement.setAttribute('data-theme', current);
+
+      const btn = document.getElementById('themeToggle');
+      function updateText(theme) {
+        btn.textContent = theme === 'dark' ? '日间模式' : '夜间模式';
+      }
+      updateText(current);
+
+      btn.onclick = () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem(KEY, next);
+        updateText(next);
+      };
+    })();
+
+    // Header 渐显入场
+    window.addEventListener('DOMContentLoaded', () => {
+      const hdr = document.getElementById('site-header');
+      setTimeout(() => {
+        hdr.classList.remove('opacity-0', '-translate-y-8');
+        hdr.classList.add('opacity-100', 'translate-y-0');
+      }, 100);
+    });
+
+    // 资源加载后隐藏遮罩
+    window.addEventListener('load', () => {
+      const overlay = document.getElementById('loadingOverlay');
+      overlay.classList.add('fade-out');
+      overlay.addEventListener('transitionend', () => overlay.remove());
+    });
+  </script>
+</body>
+
+</html>

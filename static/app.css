@@ -1,0 +1,314 @@
+
+/* app.css */
+/* ========== 主题变量 ========== */
+/* 日间（默认） */
+:root {
+  --bg: #f0f0f0;
+  --bg2: #dcdcdc;
+  --surface: #ffffff;
+  --text: #333;
+  --muted: #555;
+
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-200: #c7d2fe;
+  --primary-500: #4a90e2;
+  --primary-600: #357ABD;
+  --primary-700: #4338ca;
+
+  --success: #16a34a;
+  --error: #d32f2f;
+  --warning: #d97706;
+
+  --radius: 12px;
+  --shadow-1: 0 8px 20px rgba(0, 0, 0, 0.1);
+  --shadow-2: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --focus-ring: 0 0 0 3px rgba(74, 144, 226, 0.15);
+}
+
+/* 夜间 */
+html[data-theme="dark"] {
+  --bg: #0b1020;
+  --bg2: #0f162e;
+  --surface: #0f1831;
+  --text: #e5e7eb;
+  --muted: #a1a1aa;
+
+  --primary-50: #1a1f3d;
+  --primary-100: #232a52;
+  --primary-200: #2b3470;
+  --primary-500: #7c83ff;
+  --primary-600: #96a0ff;
+  --primary-700: #bcc3ff;
+
+  --success: #16a34a;
+  --error: #dc2626;
+  --warning: #d97706;
+
+  --radius: 14px;
+  --shadow-1: 0 10px 25px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-2: 0 18px 40px rgba(0, 0, 0, 0.45), 0 4px 14px rgba(0, 0, 0, 0.3);
+  --focus-ring: 0 0 0 3px rgba(124, 131, 255, 0.45);
+}
+
+/* ========== 全局基础 ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: linear-gradient(135deg, var(--bg), var(--bg2));
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, var(--primary-50) 0%, transparent 50%),
+    radial-gradient(900px 500px at 100% -20%, var(--primary-100) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+}
+
+/* ========== 布局 ========== */
+.center {
+  min-height: calc(100dvh - 120px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+/* ========== 卡片 ========== */
+.card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
+  padding: 28px;
+  border: 1px solid rgba(99, 102, 241, 0.06);
+  backdrop-filter: saturate(150%) blur(6px);
+  animation: floatIn 320ms ease-out;
+}
+
+.card-header {
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ========== 表单 ========== */
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  gap: 8px;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text);
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.input::placeholder {
+  color: #9aa3b2;
+}
+
+.input:focus {
+  border-color: var(--primary-500);
+  box-shadow: var(--focus-ring);
+}
+
+html[data-theme="dark"] .input {
+  border: 1px solid rgba(99, 102, 241, 0.18);
+  background: rgba(15, 24, 49, 0.9);
+}
+
+/* ========== 按钮 ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 0;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform 80ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.02);
+  box-shadow: 0 10px 22px rgba(99, 102, 241, 0.34);
+}
+
+.btn-secondary {
+  color: #fff;
+  background: linear-gradient(180deg, #6b7280, #4b5563);
+  box-shadow: 0 8px 18px rgba(107, 114, 128, 0.28);
+}
+
+.btn-secondary:hover {
+  filter: brightness(1.02);
+  box-shadow: 0 10px 22px rgba(107, 114, 128, 0.34);
+}
+
+.btn-danger {
+  color: #fff;
+  background: linear-gradient(180deg, var(--error), #b91c1c);
+  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.28);
+}
+
+.btn-danger:hover {
+  filter: brightness(1.02);
+  box-shadow: 0 10px 22px rgba(220, 38, 38, 0.34);
+}
+
+a.btn,
+a.btn:hover {
+  text-decoration: none;
+}
+
+/* ========== 链接与分割线 ========== */
+a {
+  color: var(--primary-600);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.18), transparent);
+  margin: 8px 0 2px 0;
+}
+
+/* ========== 提示信息 ========== */
+.alert {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+
+.alert-success {
+  background: #eaf7ef;
+  color: #166534;
+  border-color: #ccebd8;
+}
+
+.alert-warning {
+  background: #fff4e6;
+  color: #7c2d12;
+  border-color: #ffe0b3;
+}
+
+.alert-error,
+.alert-danger {
+  background: #ffe6e6;
+  color: #991b1b;
+  border-color: #f5c2c2;
+}
+
+/* ========== 动画 ========== */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== 主题切换按钮（可选） ========== */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: var(--surface);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-1);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+}
+
+/* ========== 响应式优化 ========== */
+@media (max-width: 600px) {
+  .card {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .btn {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}

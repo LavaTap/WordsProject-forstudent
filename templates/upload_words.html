@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}上传自定义单词表{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/upload_words.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="center">
+    <div class="card">
+        <h4 class="title text-center">上传自定义单词表</h4>
+        {% if msg %}
+        <div class="alert alert-info text-center">{{ msg }}</div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" class="form">
+            <form action="/api/wordlist" method="post" enctype="multipart/form-data" id="uploadForm" class="form">
+                <div class="form-row">
+                    <label for="wordfile" class="custom-upload">📁 点击选择单词表（.txt）</label>
+                    <input type="file" name="wordfile" id="wordfile" accept=".txt" class="hidden-input" required>
+                </div>
+                            <div class="form-text">
+                <ul>
+                    <li>每行一个单词</li>
+                    <li>建议不要带编号或序号</li>
+                    <li>仅支持 <code>.txt</code> 格式</li>
+                </ul>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">上传并保存</button>
+            </form>
+        </form>
+    </div>
+</div>
+{% endblock %}

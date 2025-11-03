@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="center">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2 class="title">登录</h2>
+            <p class="subtitle">欢迎回来</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="post" class="form">
+            <div class="form-row">
+                <label class="label">学号</label>
+                <input type="text" name="student_id" class="input" required>
+            </div>
+            <div class="form-row">
+                <label class="label">密码</label>
+                <input type="password" name="password" class="input" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">登录</button>
+        </form>
+
+        <div class="divider mt-4"></div>
+        <p class="text-center mt-2">
+            没有账号？
+            <a href="{{ url_for('auth.register') }}">注册</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

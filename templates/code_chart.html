@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>最近 7 天编码时间分布</h2>
+    <canvas id="summaryChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    fetch('/api/summaries')
+        .then(res => res.json())
+        .then(data => {
+            const labels = data.map(item => item.date);
+            const values = data.map(item => (item.total_seconds / 3600).toFixed(2));
+
+            new Chart(document.getElementById('summaryChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '编码时长（小时）',
+                        data: values,
+                        borderColor: '#4e73df',
+                        backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '小时' }
+                        },
+                        x: {
+                            title: { display: true, text: '日期' }
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        });
+</script>
+
+{% endblock %}
