@@ -1,5 +1,19 @@
-【flask项目展示】https://www.xiaohongshu.com/discovery/item/69085831000000000302f67f?source=webshare&xhsshare=pc_web&xsec_token=ABBwS18bb-cWX5ZmrWQdd8YBgroQQaE9YqDgR4eijrn3U=&xsec_source=pc_share # 社恐人！下辈子出个讲解视频吧
-# WordsProject 文档
+# WordsProject-forstudent
+
+**A Vocabulary Learning Web Application**
+
+Copyright (c) 2024 WordsProject-forstudent Authors. See [LICENSE](LICENSE) for license information.
+
+---
+
+## 📋 Project Overview
+
+WordsProject-forstudent is a personal vocabulary learning project built with Flask, designed to help students improve their English vocabulary through interactive quizzes, progress tracking, and AI-powered analysis.
+
+**Author:** [Your Name]
+**Contact:** [Your Email]
+**Created:** 2024
+**License:** MIT (see [LICENSE](LICENSE) file)
 
 ---
 

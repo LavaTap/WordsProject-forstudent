@@ -1,3 +1,11 @@
+"""
+WordsProject-forstudent - Database Models
+Copyright (c) 2024 WordsProject-forstudent Authors
+
+This file is part of the WordsProject-forstudent project.
+See LICENSE for license information.
+"""
+
 from enum import unique
 import json
 

@@ -1,0 +1,36 @@
+# Authors of WordsProject-forstudent
+
+## Primary Author
+- [Your Name] ([your.email@example.com])
+
+## Project Information
+- Project Name: WordsProject-forstudent
+- Description: A vocabulary learning web application built with Flask
+- Created: 2024
+- License: MIT License (see LICENSE file)
+
+## Copyright
+Copyright (c) 2024 WordsProject-forstudent Authors
+
+## Files with Copyright Notices
+- `app.py` - Main application file
+- `models.py` - Database models
+- `extensions.py` - Flask extensions
+- All Python modules in the project
+
+## Attribution Guidelines
+When using or modifying this code, please maintain proper attribution by including:
+- Original copyright notice
+- Author information
+- Reference to the original repository
+
+## Contact
+For questions regarding usage, licensing, or attribution:
+- Email: [your.email@example.com]
+- GitHub: [Your GitHub profile]
+
+## Note
+This is a personal project developed for educational purposes. All code was written by the primary author unless otherwise explicitly noted.
+
+---
+This file should be included when sharing or distributing the project.
