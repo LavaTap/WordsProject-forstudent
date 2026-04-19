@@ -1,0 +1,23 @@
+{
+  "name": "_auto_0db5ba6535644c019726187f21ae8722",
+  "leadAgentId": "0db5ba6535644c019726187f21ae8722",
+  "workspacePath": "d:\\code\\private\\WordsProject-forstudent",
+  "createdAt": "2026-04-17T08:42:42.424Z",
+  "options": {
+    "workspacePath": "d:\\code\\private\\WordsProject-forstudent",
+    "isAutoTeam": true
+  },
+  "members": [
+    {
+      "memberId": "team-lead@_auto_0db5ba6535644c019726187f21ae8722",
+      "name": "team-lead",
+      "role": "Team Lead - coordinates the team and interacts with the user"
+    },
+    {
+      "memberId": "code-reviewer@_auto_0db5ba6535644c019726187f21ae8722",
+      "name": "code-reviewer",
+      "role": "代码审查智能体"
+    }
+  ],
+  "isAutoTeam": true
+}

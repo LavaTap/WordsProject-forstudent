@@ -1,9 +1,28 @@
+"""
+WordsProject-forstudent - WakaTime数据同步模块
+
+从WakaTime API拉取编程时间数据并存储到数据库
+
+Copyright (c) 2024 WordsProject-forstudent Authors
+"""
+
 import os
+import sys
+from pathlib import Path
 from datetime import date, timedelta
+from typing import Any
+
+# 将项目根目录加入 sys.path
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
 import requests
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+# 导入项目根目录的 models
 from models import db, Summary, ProjectDuration
 
 # 加载 .env 中的 API_KEY 和 DATABASE_URL
@@ -17,7 +36,15 @@ Session = sessionmaker(bind=engine)
 session = Session()
 db.metadata.create_all(engine)
 
-def fetch_and_store(start_date: date, end_date: date):
+
+def fetch_and_store(start_date: date, end_date: date) -> None:
+    """
+    从WakaTime API拉取指定日期范围的编程时间数据。
+
+    Args:
+        start_date: 开始日期
+        end_date: 结束日期
+    """
     url = (
         f"https://wakatime.com/api/v1/users/current/summaries"
         f"?start={start_date}&end={end_date}"
@@ -31,7 +58,6 @@ def fetch_and_store(start_date: date, end_date: date):
         day_date = date.fromisoformat(day['range']['date'])
         total_secs = day['grand_total']['total_seconds']
 
-        # 如果已存在，先删除
         existing = session.query(Summary).filter_by(date=day_date).first()
         if existing:
             session.delete(existing)
@@ -41,8 +67,7 @@ def fetch_and_store(start_date: date, end_date: date):
         session.add(summary)
         session.flush()
 
-        # 按项目聚合时长
-        project_times = {}
+        project_times: dict[str, int] = {}
         for project in day.get('projects', []):
             name = project['name']
             secs = project['total_seconds']
@@ -58,6 +83,7 @@ def fetch_and_store(start_date: date, end_date: date):
 
     session.commit()
     print(f"已拉取并存储 {start_date} 至 {end_date} 的数据。")
+
 
 if __name__ == "__main__":
     end = date.today()
